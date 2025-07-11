@@ -9,9 +9,7 @@
 
 
 tasks = []
-
 print("Welcome to your to-do app \n ") 
-
 
 while True:
 
@@ -31,9 +29,12 @@ while True:
         tasks.append(task_info)
 
     elif response in ['v', 'visualize']: 
-         print("\nYour tasks:" )
-         for i in tasks:
-            print(i)
+        if tasks:
+            print("\nYour tasks:")
+            for i, task in enumerate(tasks, 1):
+                print(f"{i}. {task['task']} at {task['time']} on {task['date']}")
+        else:
+             print("No tasks yet.")
 
     elif response in ['e', 'exit']:
         print("Goodbye!")
