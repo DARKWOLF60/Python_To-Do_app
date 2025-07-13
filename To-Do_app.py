@@ -1,19 +1,13 @@
 #TO-DO app in terminal:
-# Make it print "Welcome to your to-do app" *
-#Let the user create a task 
-#Save it to a list *
-#Show the list *
 
-#Add the time for the task *
-#Add the day for the task *
-
+#Possibility to delete/complete the task 
 
 tasks = []
 print("Welcome to your to-do app \n ") 
 
 while True:
 
-    response = input("\nDo you want to 'add' (a), 'visualize' (v), or 'exit' (e)? ").lower()
+    response = input("\nDo you want to 'add' (a), 'visualize' (v), 'complete' (c) or 'exit' (e)? ").lower()
 
     if response in ['a', 'add']:
 
@@ -35,6 +29,19 @@ while True:
                 print(f"{i}. {task['task']} at {task['time']} on {task['date']}")
         else:
              print("No tasks yet.")
+
+    elif response in ['c', 'complete']:
+        
+        if tasks:
+            print("\nYour tasks:")
+            for i, task in enumerate(tasks, 1):
+                print(f"{i}. {task['task']} at {task['time']} on {task['date']}")
+            d_task = int(input('which task do you want to mark as complete? (number) \n'))
+            del tasks[d_task - 1] 
+                
+        else:
+             print("No tasks yet.")
+
 
     elif response in ['e', 'exit']:
         print("Goodbye!")
