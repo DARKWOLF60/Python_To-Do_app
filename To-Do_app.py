@@ -1,13 +1,30 @@
 #TO-DO app in terminal:
-
 #Possibility to delete/complete the task 
 
-tasks = []
+import json
+import os   
+
+
+#function to save tasks 
+def save_task():
+    with open ("tasks.json", "w") as file: #opens the file in write mode
+        json.dump(tasks, file) #saves the file with the dump function 
+
+
 print("Welcome to your to-do app \n ") 
 
+# Check if the file exists and is not empty, then load it
+if os.path.exists("tasks.json") and os.path.getsize("tasks.json") > 0:
+    with open("tasks.json", "r") as file:
+        tasks = json.load(file)
+else: 
+    tasks = []
+
+
+#main code
 while True:
 
-    response = input("\nDo you want to 'add' (a), 'visualize' (v), 'complete' (c) or 'exit' (e)? ").lower()
+    response = input("\nDo you want to 'add' (a), 'visualize' (v), 'complete' (c) or 'exit' (e)? ").lower() #lower function to make the string (letter) lowercase
 
     if response in ['a', 'add']:
 
@@ -16,11 +33,12 @@ while True:
         date = input("insert the date: ")
 
         task_info = {
-          "task": task,
+            "task": task,
             "time": time,
-        "date": date
+            "date": date
         }
-        tasks.append(task_info)
+        tasks.append(task_info) #append = list method to add an item at the end of the list 
+        save_task()
 
     elif response in ['v', 'visualize']: 
         if tasks:
@@ -38,6 +56,7 @@ while True:
                 print(f"{i}. {task['task']} at {task['time']} on {task['date']}")
             d_task = int(input('which task do you want to mark as complete? (number) \n'))
             del tasks[d_task - 1] 
+            save_task()
                 
         else:
              print("No tasks yet.")
