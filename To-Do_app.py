@@ -24,7 +24,7 @@ else:
 #main code
 while True:
 
-    response = input("\nDo you want to 'add' (a), 'visualize' (v), 'complete' (c) or 'exit' (e)? ").lower() #lower function to make the string (letter) lowercase
+    response = input("\nDo you want to 'add' (a), 'visualize' (v), 'complete' (c), 'delete' (d) or 'exit' (e)? ").lower() #lower function to make the string (letter) lowercase
 
     if response in ['a', 'add']:
 
@@ -35,7 +35,8 @@ while True:
         task_info = {
             "task": task,
             "time": time,
-            "date": date
+            "date": date,
+            "completed" : False 
         }
         tasks.append(task_info) #append = list method to add an item at the end of the list 
         save_task()
@@ -44,7 +45,8 @@ while True:
         if tasks:
             print("\nYour tasks:")
             for i, task in enumerate(tasks, 1):
-                print(f"{i}. {task['task']} at {task['time']} on {task['date']}")
+                 status = "Completed" if task.get("completed") else "Not Completed" #shows the status of the task
+                 print(f"{i}. {task['task']} at {task['time']} on {task['date']} - {status}")
         else:
              print("No tasks yet.")
 
@@ -54,9 +56,17 @@ while True:
             print("\nYour tasks:")
             for i, task in enumerate(tasks, 1):
                 print(f"{i}. {task['task']} at {task['time']} on {task['date']}")
-            d_task = int(input('which task do you want to mark as complete? (number) \n'))
-            del tasks[d_task - 1] 
-            save_task()
+            d_task = int(input('which task do you want to mark as complete? (number) or mark all (0)\n'))
+
+            if (d_task == 0 ):
+                print("All the tasks are marked as completed! \n")
+                for task in tasks :
+                    task["completed"] = True
+                    save_task() 
+                    
+            else:
+                del tasks[d_task - 1] 
+                save_task()
                 
         else:
              print("No tasks yet.")
